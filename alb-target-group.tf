@@ -8,16 +8,25 @@ resource "aws_lb_listener_rule" "green" {
 
   condition {
     host_header {
-      values = [var.hostname]
+      values = [local.hostname_green]
+    }
+  }
+
+  # Optional path condition
+  condition {
+    path_pattern {
+      values = local.paths_final
     }
   }
 
   lifecycle {
+    # CodeDeploy swaps the target group in the listener action during deployments.
     ignore_changes = [action[0].target_group_arn]
   }
 }
 
 resource "aws_lb_listener_rule" "blue" {
+  count        = local.hostname_blue != "" ? 1 : 0
   listener_arn = var.alb_listener_https_arn
 
   action {
@@ -27,7 +36,13 @@ resource "aws_lb_listener_rule" "blue" {
 
   condition {
     host_header {
-      values = [var.hostname_blue]
+      values = [local.hostname_blue]
+    }
+  }
+
+  condition {
+    path_pattern {
+      values = local.paths_final
     }
   }
 

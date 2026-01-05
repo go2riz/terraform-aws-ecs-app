@@ -18,27 +18,22 @@ output "target_group_blue_arn" {
   value       = aws_lb_target_group.blue.arn
 }
 
-output "cloudfront_distribution_id" {
-  description = "ID of the CloudFront distribution."
-  value       = aws_cloudfront_distribution.default.id
+output "listener_rule_green_arn" {
+  description = "ARN of the green listener rule."
+  value       = aws_lb_listener_rule.green.arn
 }
 
-output "cloudfront_domain_name" {
-  description = "Domain name of the CloudFront distribution."
-  value       = aws_cloudfront_distribution.default.domain_name
+output "listener_rule_blue_arn" {
+  description = "ARN of the blue listener rule (if created)."
+  value       = try(aws_lb_listener_rule.blue[0].arn, null)
 }
 
-output "route53_record_hostname" {
-  description = "Route53 record name for the primary hostname."
-  value       = aws_route53_record.hostname.fqdn
+output "codedeploy_app_name" {
+  description = "CodeDeploy application name."
+  value       = aws_codedeploy_app.ecs.name
 }
 
-output "route53_record_hostname_blue" {
-  description = "Route53 record name for the blue hostname."
-  value       = aws_route53_record.hostname_blue.fqdn
-}
-
-output "route53_record_hostname_origin" {
-  description = "Route53 record name for the origin hostname."
-  value       = aws_route53_record.hostname_origin.fqdn
+output "codedeploy_deployment_group_name" {
+  description = "CodeDeploy deployment group name."
+  value       = aws_codedeploy_deployment_group.ecs.deployment_group_name
 }
