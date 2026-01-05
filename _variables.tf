@@ -193,6 +193,12 @@ variable "alarm_sns_topics" {
   default     = []
 }
 
+variable "healthcheck_matcher" {
+  description = "HTTP codes to match for ALB target group health checks (e.g. \"200\" or \"200-399\")."
+  type        = string
+  default     = "200"
+}
+
 # --- Logging / tags ---
 variable "log_retention_in_days" {
   description = "CloudWatch Logs retention in days."
