@@ -46,6 +46,8 @@ resource "aws_lb_target_group" "green" {
   health_check {
     path = var.healthcheck_path
   }
+
+  tags = local.tags
 }
 
 resource "aws_lb_target_group" "blue" {
@@ -58,4 +60,6 @@ resource "aws_lb_target_group" "blue" {
   health_check {
     path = var.healthcheck_path
   }
+
+  tags = local.tags
 }

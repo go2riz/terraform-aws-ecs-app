@@ -49,4 +49,6 @@ resource "aws_cloudfront_distribution" "default" {
       restriction_type = "none"
     }
   }
+
+  tags = local.tags
 }

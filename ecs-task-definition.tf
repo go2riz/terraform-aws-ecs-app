@@ -1,7 +1,7 @@
 resource "aws_ecs_task_definition" "default" {
   family = var.name
 
-  execution_role_arn = var.task_role_arn
+  execution_role_arn = local.execution_role_arn_final
   task_role_arn      = var.task_role_arn
 
   container_definitions = jsonencode([
@@ -26,4 +26,6 @@ resource "aws_ecs_task_definition" "default" {
       }
     }
   ])
+
+  tags = local.tags
 }
