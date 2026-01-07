@@ -237,6 +237,6 @@ variable "alb_cloudfront_key" {
 
 variable "wafv2_web_acl_name" {
   type        = string
-  description = "Optional name override for the WAFv2 Web ACL. If null, defaults to \"alb-${var.name}-waf\"."
+  description = "Optional name override for the WAFv2 Web ACL. If null, defaults to \"alb-<name>-waf\"."
   default     = null
 }
