@@ -64,3 +64,27 @@ module "app" {
 ## Notes on `service_role_arn`
 
 Modern ECS services typically use the **service-linked role** automatically. This module keeps a legacy `service_role_arn` input for backwards compatibility, but does **not** set `aws_ecs_service.iam_role` unless you explicitly enable it with `use_legacy_service_iam_role = true`.
+
+## Optional: WAFv2 (REGIONAL) ALB header protection (replaces WAF Classic)
+
+If your previous setup used **WAF Classic (wafregional)** to enforce a shared-secret header from CloudFront to the ALB (e.g. `fromcloudfront: <random>`), enable this module feature to re-create the same protection in **WAFv2**.
+
+**Behaviour**
+
+- Default action: `BLOCK`
+- `ALLOW` only when the request contains header `fromcloudfront` exactly equal to `alb_cloudfront_key`
+
+**Example**
+
+```hcl
+module "app" {
+  # ...existing args...
+
+  enable_wafv2_alb_header_protection = true
+  alb_arn                            = module.ecs_cluster.alb_arn
+  alb_cloudfront_key                 = module.ecs_cluster.alb_cloudfront_key
+
+  # optional
+  wafv2_web_acl_name = "alb_ecs_${var.env}"
+}
+```

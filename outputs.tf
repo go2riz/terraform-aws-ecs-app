@@ -37,3 +37,13 @@ output "codedeploy_deployment_group_name" {
   description = "CodeDeploy deployment group name."
   value       = aws_codedeploy_deployment_group.ecs.deployment_group_name
 }
+
+output "wafv2_web_acl_arn" {
+  description = "ARN of the WAFv2 web ACL associated to the ALB (if enabled)."
+  value       = try(aws_wafv2_web_acl.alb[0].arn, null)
+}
+
+output "wafv2_web_acl_id" {
+  description = "ID of the WAFv2 web ACL (if enabled)."
+  value       = try(aws_wafv2_web_acl.alb[0].id, null)
+}

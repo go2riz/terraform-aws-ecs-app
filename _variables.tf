@@ -211,3 +211,32 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+#############################################
+# Optional: WAFv2 (REGIONAL) - ALB header protection
+#############################################
+
+variable "enable_wafv2_alb_header_protection" {
+  type        = bool
+  description = "When true, creates a REGIONAL WAFv2 Web ACL and associates it to an ALB. The Web ACL blocks all requests by default and only allows requests that include header 'fromcloudfront' exactly matching var.alb_cloudfront_key."
+  default     = false
+}
+
+variable "alb_arn" {
+  type        = string
+  description = "ALB ARN to associate the WAFv2 Web ACL with (e.g., aws_lb.<name>.arn). Required when enable_wafv2_alb_header_protection is true."
+  default     = null
+}
+
+variable "alb_cloudfront_key" {
+  type        = string
+  description = "Shared secret value expected in header 'fromcloudfront'. This should match the custom origin header value set on the CloudFront distribution. Required when enable_wafv2_alb_header_protection is true."
+  default     = null
+  sensitive   = true
+}
+
+variable "wafv2_web_acl_name" {
+  type        = string
+  description = "Optional name override for the WAFv2 Web ACL. If null, defaults to \"alb-${var.name}-waf\"."
+  default     = null
+}
