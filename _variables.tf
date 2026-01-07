@@ -240,3 +240,9 @@ variable "wafv2_web_acl_name" {
   description = "Optional name override for the WAFv2 Web ACL. If null, defaults to \"alb-<name>-waf\"."
   default     = null
 }
+
+variable "wafv2_web_acl_metric_name" {
+  type        = string
+  description = "Optional CloudWatch metric name override for the WAFv2 Web ACL visibility_config.metric_name. If null, defaults to \"alb-<name>\"."
+  default     = null
+}
