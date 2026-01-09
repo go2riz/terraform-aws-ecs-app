@@ -1,12 +1,12 @@
 resource "aws_ecs_task_definition" "default" {
-  family = var.name
+  family = "${var.cluster_name}-${var.name}"
 
   execution_role_arn = local.execution_role_arn_final
   task_role_arn      = var.task_role_arn
 
   container_definitions = jsonencode([
     {
-      name      = var.name
+      name      = aws_ecs_task_definition.default.family
       image     = var.image
       cpu       = var.cpu
       memory    = var.memory
@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "default" {
         options = {
           awslogs-group         = aws_cloudwatch_log_group.default.name
           awslogs-region        = data.aws_region.current.name
-          awslogs-stream-prefix = var.name
+          awslogs-stream-prefix = aws_ecs_task_definition.default.family
         }
       }
     }
