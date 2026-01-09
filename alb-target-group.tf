@@ -52,7 +52,7 @@ resource "aws_lb_listener_rule" "blue" {
 }
 
 resource "aws_lb_target_group" "green" {
-  name                 = "ecs-${var.name}-green"
+  name                 = "${var.cluster_name}-${var.name}-green"
   port                 = var.port
   protocol             = "HTTP"
   vpc_id               = var.vpc_id
@@ -67,7 +67,7 @@ resource "aws_lb_target_group" "green" {
 }
 
 resource "aws_lb_target_group" "blue" {
-  name                 = "ecs-${var.name}-blue"
+  name                 = "${var.cluster_name}-${var.name}-blue"
   port                 = var.port
   protocol             = "HTTP"
   vpc_id               = var.vpc_id
