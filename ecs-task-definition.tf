@@ -6,7 +6,7 @@ resource "aws_ecs_task_definition" "default" {
 
   container_definitions = jsonencode([
     {
-      name      = "${var.cluster_name}-${var.name}"
+      name      = var.name
       image     = var.image
       cpu       = var.cpu
       memory    = var.memory
@@ -21,7 +21,7 @@ resource "aws_ecs_task_definition" "default" {
         options = {
           awslogs-group         = aws_cloudwatch_log_group.default.name
           awslogs-region        = data.aws_region.current.name
-          awslogs-stream-prefix = "${var.cluster_name}-${var.name}"
+          awslogs-stream-prefix = var.name
         }
       }
     }
